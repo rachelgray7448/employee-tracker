@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const db = require("./db/connection");
-const consoletable = rquire("console.table");
+const consoletable = require("console.table");
 
 function beginMenu() {
     inquirer
@@ -26,23 +26,13 @@ function beginMenu() {
         } else if (answers.main === "View All Roles") {
             allRoles();
         } else if (answers.main === "Add Employee") {
-          // what is employees first name
-          // what is employees last name
-          // what is employees role - with options
-          // who is the employees manager - with options, including none
-          // "added (emp name) to db"
+            addEmployee();
         } else if (answers.main === "Update Employee Role") {
-          // which employee - with options
-          // which role do you want to assign to the selected employee --  with options
-          // "updated employee's role"
+            updateEmployee();
         }  else if (answers.main === "Add Role") {
-          // what is the name of the role
-          // what is the salary of the role
-          // which department does the role belong to - with options
-          // "added (role name) to database"
+            addRole();
         }  else if (answers.main === "Add Department") {
-          // what is the name of the department
-          // "added (dp name) to database"
+            addDepartment();
         }
     });
 }
@@ -73,3 +63,78 @@ function allDepartments() {
         beginMenu();
     })
 };
+
+function addEmployee() {
+    const questions = [
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the employees first name?'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the employees last name?'
+        },
+        {
+            type: 'list',
+            name: 'employeeRole',
+            message: 'What is the employees role?',
+            choices: ['Sales Lead', 'Sales Person', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
+        },
+        {
+            type: 'list',
+            name: 'manager',
+            message: 'Who is your employees manager?',
+            choices: ['none', '']
+        }
+    ];
+
+    inquirer.prompt(questions).then(answers) // add to db??
+    console.log('Employee added to database');
+    beginMenu();       
+};
+
+function addRole() {
+    const questions = [
+        {
+            type: 'input',
+            name: 'roleName',
+            message: 'What is the name of the role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary of the role?'
+        },
+        {
+            type: 'list',
+            name: 'department',
+            message: 'Which department does the role belong to?',
+            choices: ['Engineering', 'Finance', 'Legal', 'Sales']
+        },
+    ];
+
+    inquirer.prompt(questions).then(answers) // add to db?
+    console.log("Added new role to database");
+    beginMenu();
+};
+
+function addDepartment() {
+    inquirer.prompt(
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'What is the name of the department?'
+        }
+    )
+    .then (answers) //add to db??
+    console.log("Added department to database.");
+    beginMenu();
+};
+
+function updateEmployee() {
+        // which employee - with options
+          // which role do you want to assign to the selected employee --  with options
+          // "updated employee's role"
+}
